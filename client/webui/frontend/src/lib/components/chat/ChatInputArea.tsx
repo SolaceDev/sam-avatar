@@ -3,14 +3,13 @@ import type { ChangeEvent, FormEvent, ClipboardEvent } from "react";
 
 import { Ban, Paperclip, Send } from "lucide-react";
 
-import { Button, ChatInput, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/lib/components/ui";
+import { Button, ChatInput } from "@/lib/components/ui";
 import { useChatContext, useDragAndDrop, useDebounce } from "@/lib/hooks";
-import type { AgentCard } from "@/lib/types";
 
 import { FileBadge } from "./file/FileBadge";
 
-export const ChatInputArea: React.FC<{ agents: AgentCard[], scrollToBottom?: () => void }> = ({ agents = [], scrollToBottom }) => {
-    const { isResponding, isCancelling, userInput, selectedAgentName, setSelectedAgentName, setUserInput, handleSubmit, handleCancel } = useChatContext();
+export const ChatInputArea: React.FC<{ scrollToBottom?: () => void }> = ({ scrollToBottom }) => {
+    const { isResponding, isCancelling, userInput, setUserInput, handleSubmit, handleCancel } = useChatContext();
 
     // File selection support
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -168,19 +167,7 @@ export const ChatInputArea: React.FC<{ agents: AgentCard[], scrollToBottom?: () 
                     <Paperclip className="size-4" />
                 </Button>
 
-                <div>Agent: </div>
-                <Select value={selectedAgentName} onValueChange={setSelectedAgentName} disabled={isResponding || agents.length === 0}>
-                    <SelectTrigger className="w-[250px]">
-                        <SelectValue defaultValue={selectedAgentName} />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {agents.map(agent => (
-                            <SelectItem key={agent.name} value={agent.name}>
-                                {agent.display_name || agent.name}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
+                {/* Agent dropdown removed */}
 
                 {isResponding && !isCancelling ? (
                     <Button className="ml-auto gap-1.5" onClick={handleCancel} variant="outline" disabled={isCancelling} tooltip="Cancel">
