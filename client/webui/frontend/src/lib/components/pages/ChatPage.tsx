@@ -73,22 +73,37 @@ export function ChatPage() {
 
     return (
         <div className="relative flex h-screen w-full flex-col overflow-hidden">
-            {/* Removed header and session sidebar */}
-            <div className="flex min-h-0 flex-1">
-                <div className="min-h-0 flex-1 overflow-x-auto">
+            {/* Black background iframe at the top */}
+            <div className="w-full flex-grow" style={{ backgroundColor: "black", height: "70%" }}>
+                <iframe
+                    src="about:blank"
+                    className="w-full h-full border-none"
+                    title="Content Viewer"
+                    sandbox="allow-same-origin allow-scripts"
+                ></iframe>
+            </div>
+            
+            {/* Reduced height chat area */}
+            <div className="flex w-full" style={{ height: "30%" }}>
+                <div className="w-full overflow-x-auto">
                     <div className="h-full">
-                        <div className="flex h-full w-full flex-col py-6">
-                            <ChatMessageList className="text-base" ref={chatMessageListRef}>
-                                {messages.map((message, index) => {
-                                    const isLastWithTaskId = !!(message.taskId && lastMessageIndexByTaskId.get(message.taskId) === index);
-                                    return <ChatMessage 
-                                        message={message} 
-                                        key={`${message.metadata?.sessionId || "session"}-${index}-${message.isUser ? "received" : "sent"}`} 
-                                        isLastWithTaskId={isLastWithTaskId} 
-                                    />;
-                                })}
-                            </ChatMessageList>
-                            <div style={CHAT_STYLES}>
+                        <div className="flex h-full w-full flex-col">
+                            {/* Reduced height message list */}
+                            <div className="flex-grow overflow-y-auto" style={{ maxHeight: "70%" }}>
+                                <ChatMessageList className="text-base" ref={chatMessageListRef}>
+                                    {messages.map((message, index) => {
+                                        const isLastWithTaskId = !!(message.taskId && lastMessageIndexByTaskId.get(message.taskId) === index);
+                                        return <ChatMessage
+                                            message={message}
+                                            key={`${message.metadata?.sessionId || "session"}-${index}-${message.isUser ? "received" : "sent"}`}
+                                            isLastWithTaskId={isLastWithTaskId}
+                                        />;
+                                    })}
+                                </ChatMessageList>
+                            </div>
+                            
+                            {/* Reduced height input area */}
+                            <div style={{ ...CHAT_STYLES, maxHeight: "30%" }} className="overflow-y-auto">
                                 {loadingMessage && <LoadingMessageRow statusText={loadingMessage.text} onViewWorkflow={undefined} />}
                                 <ChatInputArea scrollToBottom={chatMessageListRef.current?.scrollToBottom} />
                             </div>
@@ -96,7 +111,6 @@ export function ChatPage() {
                     </div>
                 </div>
             </div>
-            {/* Removed ChatSessionDialog */}
         </div>
     );
 }
