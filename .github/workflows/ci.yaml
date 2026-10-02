@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - name: Get Commit Hash
         id: get_commit_hash
@@ -79,14 +79,14 @@ jobs:
           echo "UPDATE_MANIFEST=$UPDATE_MANIFEST" >> $GITHUB_ENV
 
       - name: Setup Qemu
-        uses: docker/setup-qemu-action@v3.6.0
+        uses: docker/setup-qemu-action@29109295f81e9208d7d86ff1c6c12d2833863392 # v3.6.0
 
       - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v3.10.0
+        uses: docker/setup-buildx-action@b5ca514318bd6ebac0fb2aedd5d36ec1b5c232a2 # v3.10.0
 
       - name: Configure AWS credentials
         if: fromJSON(env.DOCKER_PUSH)
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
         with:
           aws-access-key-id: ${{ secrets.SAM_AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.SAM_AWS_SECRET_ACCESS_KEY }}
@@ -95,7 +95,7 @@ jobs:
       - name: Login to Amazon ECR
         if: fromJSON(env.DOCKER_PUSH)
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
+        uses: aws-actions/amazon-ecr-login@03f1aad4c6c7ffd436567f42f9384779290529bd # v2
 
       - name: Tag Images
         id: tag_images
@@ -126,7 +126,7 @@ jobs:
           echo "Created tags: ${tags}"
 
       - name: Build and Push Docker Image
-        uses: docker/build-push-action@v6.16.0
+        uses: docker/build-push-action@14487ce63c7a62a4a324b0bfb37086795e31c6c1 # v6.16.0
         with:
           context: .
           file: Dockerfile

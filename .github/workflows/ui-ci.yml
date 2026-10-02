@@ -31,12 +31,12 @@ jobs:
     if: github.event_name == 'pull_request'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 0
 
       - name: Validate PR Title
-        uses: amannn/action-semantic-pull-request@v5
+        uses: amannn/action-semantic-pull-request@e32d7e603df1aa1ba07e981f2a23455dee596825 # v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -69,12 +69,12 @@ jobs:
         working-directory: client/webui/frontend
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 20
           cache: "npm"
@@ -101,7 +101,7 @@ jobs:
 
       - name: Run WhiteSource Scan
         id: whitesource_scan
-        uses: SolaceDev/solace-public-workflows/.github/actions/whitesource-scan@main
+        uses: SolaceDev/solace-public-workflows/.github/actions/whitesource-scan@c689e87fd881013c2e5009bf6e751b49cae7527b # main
         continue-on-error: true
         with:
           whitesource_api_key: ${{ secrets.WHITESOURCE_API_KEY }}
@@ -209,7 +209,7 @@ jobs:
         working-directory: client/webui/frontend
     steps:
       - name: "Checkout source code"
-        uses: "actions/checkout@v4"
+        uses: "actions/checkout@11d5960a326750d5838078e36cf38b85af677262" # v4
         with:
           ref: ${{ github.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -219,13 +219,13 @@ jobs:
         run: cat ./package.json
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 20
 
       - name: "Automated Version Bump"
         id: bump
-        uses: "phips28/gh-action-bump-version@master"
+        uses: "phips28/gh-action-bump-version@63bc5b97aade4390bf3f33416b8adb891a0f28d7" # master
         with:
           minor-wording: "feat,minor"
           major-wording: "BREAKING CHANGE,major"
@@ -257,7 +257,7 @@ jobs:
 
       - name: Set up SSH agent
         if: steps.bump.outputs.newTag != ''
-        uses: webfactory/ssh-agent@v0.9.1
+        uses: webfactory/ssh-agent@a6f90b1f127823b31d4d4a8d96047790581349bd # v0.9.1
         with:
           ssh-private-key: ${{ secrets.COMMIT_KEY }}
 
