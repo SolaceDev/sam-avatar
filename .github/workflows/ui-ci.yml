@@ -101,7 +101,7 @@ jobs:
 
       - name: Run WhiteSource Scan
         id: whitesource_scan
-        uses: SolaceDev/solace-public-workflows/.github/actions/whitesource-scan@c689e87fd881013c2e5009bf6e751b49cae7527b # main
+        uses: SolaceDev/solace-public-workflows/.github/actions/whitesource-scan@842e0b85d4f91dd5d0ad9e7ac0c75cee21aa5282 # main
         continue-on-error: true
         with:
           whitesource_api_key: ${{ secrets.WHITESOURCE_API_KEY }}
